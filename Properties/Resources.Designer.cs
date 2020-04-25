@@ -73,9 +73,9 @@ namespace MixGame.Properties {
         /// <summary>
         ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap GlassEmpty1 {
+        internal static System.Drawing.Bitmap GlassEmptyUpwards {
             get {
-                object obj = ResourceManager.GetObject("GlassEmpty1", resourceCulture);
+                object obj = ResourceManager.GetObject("GlassEmptyUpwards", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -96,36 +96,6 @@ namespace MixGame.Properties {
         internal static System.Drawing.Bitmap Marble {
             get {
                 object obj = ResourceManager.GetObject("Marble", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Marble00 {
-            get {
-                object obj = ResourceManager.GetObject("Marble00", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Marble001 {
-            get {
-                object obj = ResourceManager.GetObject("Marble001", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Marble1 {
-            get {
-                object obj = ResourceManager.GetObject("Marble1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
