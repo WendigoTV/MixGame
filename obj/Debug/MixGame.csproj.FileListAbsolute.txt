@@ -2,9 +2,9 @@ C:\Users\9dvoj.DESKTOP-N4K74MA\source\repos\MixGame\bin\Debug\MixGame.exe.config
 C:\Users\9dvoj.DESKTOP-N4K74MA\source\repos\MixGame\bin\Debug\MixGame.exe
 C:\Users\9dvoj.DESKTOP-N4K74MA\source\repos\MixGame\bin\Debug\MixGame.pdb
 C:\Users\9dvoj.DESKTOP-N4K74MA\source\repos\MixGame\obj\Debug\MixGame.csprojAssemblyReference.cache
-C:\Users\9dvoj.DESKTOP-N4K74MA\source\repos\MixGame\obj\Debug\MixGame.Form1.resources
 C:\Users\9dvoj.DESKTOP-N4K74MA\source\repos\MixGame\obj\Debug\MixGame.Properties.Resources.resources
 C:\Users\9dvoj.DESKTOP-N4K74MA\source\repos\MixGame\obj\Debug\MixGame.csproj.GenerateResource.cache
 C:\Users\9dvoj.DESKTOP-N4K74MA\source\repos\MixGame\obj\Debug\MixGame.csproj.CoreCompileInputs.cache
 C:\Users\9dvoj.DESKTOP-N4K74MA\source\repos\MixGame\obj\Debug\MixGame.exe
 C:\Users\9dvoj.DESKTOP-N4K74MA\source\repos\MixGame\obj\Debug\MixGame.pdb
+C:\Users\9dvoj.DESKTOP-N4K74MA\source\repos\MixGame\obj\Debug\MixGame.MixGame.resources

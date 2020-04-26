@@ -11,10 +11,11 @@ using System.Windows.Forms;
 
 namespace MixGame
 {
-    public partial class Form1 : Form
+    public partial class MixGame : Form
     {
         bool isMoving = false;
         bool readyToChoose = false;
+        bool devMode = false;
         public static readonly Point marble1DefaultLocation = new Point(45, 145);
         public static readonly Point marble2DefaultLocation = new Point(263, 145);
         public static readonly Point marble3DefaultLocation = new Point(478, 145);
@@ -37,7 +38,7 @@ namespace MixGame
         int numberOfMixes;
         int roundNumber = 0;
 
-        public Form1()
+        public MixGame()
         {
             InitializeComponent();
             difficulty.Items.Add("Automatická");
@@ -47,7 +48,6 @@ namespace MixGame
             difficulty.Items.Add("Těžká");
             difficulty.Items.Add("Extrémní");
             gameResults.Hide();
-            //bankrot.Hide();
             resetGlassPosition(false);
             glassList = new List<PictureBox>() { glass1, glass2, glass3 };
             glassDefaultLocationList = new List<Point>() { glass1DefaultLocation, glass2DefaultLocation, glass3DefaultLocation };
@@ -62,14 +62,15 @@ namespace MixGame
         private void startButton_Click(object sender, EventArgs e)
         {
             gameResults.Hide();
-            //bankrot.Hide();
             currentMixes = 0;
             colorControl.Stop();
 
             if (difficulty.Text != "Prosím, vyberte obtížnost!" && difficulty.Text != "") {
-                glass1.Image = MixGame.Properties.Resources.GlassFilled;
-                glass2.Image = MixGame.Properties.Resources.GlassFilled;
-                glass3.Image = MixGame.Properties.Resources.GlassFilled;
+                glass1.Image = global::MixGame.Properties.Resources.GlassFilled;
+                glass2.Image = global::MixGame.Properties.Resources.GlassFilled;
+                glass3.Image = global::MixGame.Properties.Resources.GlassFilled;
+                startButton.Text = "...";
+                startButton.Enabled = false;
             }
 
             if (difficulty.Text == "" || difficulty.Text == "Prosím, vyberte obtížnost!")
@@ -117,6 +118,7 @@ namespace MixGame
 
         private void callPerMix()
         {
+
             currentMixes += 1;
 
             if (!isMoving)
@@ -219,7 +221,7 @@ namespace MixGame
         {
             if (readyToChoose)
             {
-                glass1.Image = MixGame.Properties.Resources.GlassEmpty;
+                glass1.Image = global::MixGame.Properties.Resources.GlassEmpty;
                 endgameScreen(false);
             }
 
@@ -229,7 +231,7 @@ namespace MixGame
         {
             if (readyToChoose)
             {
-                glass2.Image = MixGame.Properties.Resources.GlassEmpty;
+                glass2.Image = global::MixGame.Properties.Resources.GlassEmpty;
                 marble.Visible = true;
                 endgameScreen(true);
             }
@@ -239,7 +241,7 @@ namespace MixGame
         {
             if (readyToChoose)
             {
-                glass3.Image = MixGame.Properties.Resources.GlassEmpty;
+                glass3.Image = global::MixGame.Properties.Resources.GlassEmpty;
                 endgameScreen(false);
             }
         }
@@ -328,8 +330,11 @@ namespace MixGame
             gameResults.Show();
             if(money <= 0)
             {
-                //bankrot.Show();
                 startButton.Enabled = false;
+                startButton.Text = "Končíš!";
+            } else {
+                startButton.Enabled = true;
+                startButton.Text = "Mix!";
             }
             readyToChoose = false;
             colorControl.Start();
@@ -357,6 +362,115 @@ namespace MixGame
             {
                 currentMoney.ForeColor = Color.FromArgb(1, 255, 255, 255);
                 currentMoney.BackColor = Color.FromArgb(50, 252, 11, 3);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            System.Windows.Forms.MessageBox.Show("Pravidla: \r\n" + "Zvolte obtížnost a stiskněte tlačítko \"Mix!\" pro začátek hry. \r\n"
+                + "Máte na výběr z 5ti úrovní, přičemž \"Automatická\" narůstá plynule a \"Extrémní\" Vám dá pořádně zabrat! \r\n"
+                + "Pokud přijdete o všechny peníze, hra pro Vás končí. \r\n" 
+                + "Dále se jedná o klasické \"skořápky\", přeji hodně štěstí! \r\n" 
+                + "\r\n" 
+                + "|)-; !ti dnif ot yrt ,gge retsae na sniatnoc osla emag ehT|");
+        }
+
+        private void difficulty_TextChanged(object sender, EventArgs e)
+        {
+            switch (difficulty.Text)
+            {
+                case "devMode":
+                    devMode = true;
+                    difficulty.Text = "Developer mode on!";
+                    break;
+
+                case "!devMode":
+                    devMode = false;
+                    difficulty.Text = "Developer mode off!";
+                    break;
+
+                case "speed+":
+                    if (devMode)
+                    {
+                        speed += 5;
+                        difficulty.Text = "Speed increased!";
+                    }
+                    break;
+
+                case "speed-":
+                    if (devMode)
+                    {
+                        speed -= 5;
+                        difficulty.Text = "Speed decreased!";
+                    }
+                    break;
+
+                case "money+":
+                    if (devMode)
+                    {
+                        money += 50;
+                        difficulty.Text = "Money added!";
+                        currentMoney.Text = "$:" + money.ToString();
+                    }
+                    break;
+
+                case "money-":
+                    if (devMode)
+                    {
+                        money -= 50;
+                        difficulty.Text = "Money removed!";
+                        currentMoney.Text = "$:" + money.ToString();
+                    }
+                    break;
+
+                case "profit+":
+                    if (devMode)
+                    {
+                        profit += 50;
+                        difficulty.Text = "Profit increased!";
+                    }
+                    break;
+
+                case "profit-":
+                    if (devMode)
+                    {
+                        profit += 50;
+                        difficulty.Text = "Profit decreased!";
+                    }
+                    break;
+
+                case "rounds+":
+                    if (devMode)
+                    {
+                        roundNumber += 1;
+                        difficulty.Text = "Round added!";
+                    }
+                    break;
+
+                case "rounds-":
+                    if (devMode)
+                    {
+                        roundNumber -= 1;
+                        difficulty.Text = "Round removed!";
+                    }
+                    break;
+
+                case "killkillkill":
+                    if (devMode)
+                    {
+                        Application.Exit();
+                    }
+                    break;
+
+                case "confirm":
+                    if(devMode)
+                    {
+                        difficulty.Items.Add("Custom");
+                        difficulty.DropDownStyle = ComboBoxStyle.DropDownList;
+                        difficulty.SelectedItem = "Custom";
+                        difficulty.Enabled = false;
+                    }
+                    break;
             }
         }
     }
