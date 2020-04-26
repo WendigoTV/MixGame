@@ -391,8 +391,9 @@ namespace MixGame
                 + "Máte na výběr z 5ti úrovní, přičemž \"Automatická\" narůstá plynule a \"Extrémní\" Vám dá pořádně zabrat! \r\n"
                 + "Pokud přijdete o všechny peníze, hra pro Vás končí. \r\n" 
                 + "Dále se jedná o klasické \"skořápky\", přeji hodně štěstí! \r\n" 
-                + "\r\n" 
-                + "|)-; !ti dnif ot yrt ,gge retsae na sniatnoc osla emag ehT|");
+                + "\r\n"
+                + "\r\n"
+                + "|9cd1a66d0dff500d226bc8305607219e|");
         }
 
         private void difficulty_TextChanged(object sender, EventArgs e)
