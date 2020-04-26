@@ -292,10 +292,16 @@ namespace MixGame
                         money += profit;
                         currentMoney.Text = "$:" + money.ToString();
                         break;
+
+                    case "You *WON*...":
+                        money = 666;
+                        currentMoney.Text = "$:" + money.ToString();
+                        break;
                 }
-                gameResults.Text = "Vyhrál Jsi! (+" + profit.ToString() + "$)";
+                gameResults.Text = "Pěkně! (+" + profit.ToString() + "$)";
+                gameResults.Location = new Point(180, 10);
             } else {
-                gameResults.Location = new Point(209, 9);
+                gameResults.Location = new Point(210, 10);
                 gameResults.Text = "Smůla! ;-;";
                 switch(difficulty.Text)
                 {
@@ -324,6 +330,11 @@ namespace MixGame
                         money = 0;
                         currentMoney.Text = "$:" + money.ToString();
                         break;
+
+                    case "You LOSE, muhahaha!":
+                        money = -666;
+                        currentMoney.Text = "$:" + money.ToString();
+                        break;
                 }
 
             }
@@ -333,8 +344,8 @@ namespace MixGame
                 startButton.Enabled = false;
                 startButton.Text = "Končíš!";
             } else {
-                startButton.Enabled = true;
-                startButton.Text = "Mix!";
+                    startButton.Enabled = true;
+                    startButton.Text = "Mix!";
             }
             readyToChoose = false;
             colorControl.Start();
@@ -367,7 +378,7 @@ namespace MixGame
 
         private void button1_Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.MessageBox.Show("Pravidla: \r\n" + "Zvolte obtížnost a stiskněte tlačítko \"Mix!\" pro začátek hry. \r\n"
+            System.Windows.Forms.MessageBox.Show("Pravidla: \r\n" + "Zvolte obtížnost a stiskněte tlačítko \"Mix!\" pro začátek hry a všechna následnující losování. \r\n"
                 + "Máte na výběr z 5ti úrovní, přičemž \"Automatická\" narůstá plynule a \"Extrémní\" Vám dá pořádně zabrat! \r\n"
                 + "Pokud přijdete o všechny peníze, hra pro Vás končí. \r\n" 
                 + "Dále se jedná o klasické \"skořápky\", přeji hodně štěstí! \r\n" 
@@ -379,7 +390,7 @@ namespace MixGame
         {
             switch (difficulty.Text)
             {
-                case "devMode":
+                case "9cd1a66d0dff500d226bc8305607219e":
                     devMode = true;
                     difficulty.Text = "Developer mode on!";
                     break;
@@ -452,6 +463,22 @@ namespace MixGame
                     {
                         roundNumber -= 1;
                         difficulty.Text = "Round removed!";
+                    }
+                    break;
+
+                case "autowin":
+                    if (devMode)
+                    {
+                        difficulty.Text = "You *WON*...";
+                        endgameScreen(true);
+                    }
+                    break;
+
+                case "autoloss":
+                    if (devMode)
+                    {
+                        difficulty.Text = "You LOSE, muhahaha!";
+                        endgameScreen(false);
                     }
                     break;
 
