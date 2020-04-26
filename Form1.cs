@@ -33,6 +33,9 @@ namespace MixGame
         int speed;
         int money;
         int profit = 50;
+        int currentMixes = 0;
+        int numberOfMixes;
+        int roundNumber = 0;
 
         public Form1()
         {
@@ -44,7 +47,7 @@ namespace MixGame
             difficulty.Items.Add("Těžká");
             difficulty.Items.Add("Extrémní");
             gameResults.Hide();
-            bankrot.Hide();
+            //bankrot.Hide();
             resetGlassPosition(false);
             glassList = new List<PictureBox>() { glass1, glass2, glass3 };
             glassDefaultLocationList = new List<Point>() { glass1DefaultLocation, glass2DefaultLocation, glass3DefaultLocation };
@@ -53,12 +56,21 @@ namespace MixGame
             marble.Location = marble2DefaultLocation;
             animationFPS.Interval = 1;
             animationFPS.Start();
+            colorControl.Interval = 100;
         }
 
         private void startButton_Click(object sender, EventArgs e)
         {
             gameResults.Hide();
-            bankrot.Hide();
+            //bankrot.Hide();
+            currentMixes = 0;
+            colorControl.Stop();
+
+            if (difficulty.Text != "Prosím, vyberte obtížnost!" && difficulty.Text != "") {
+                glass1.Image = MixGame.Properties.Resources.GlassFilled;
+                glass2.Image = MixGame.Properties.Resources.GlassFilled;
+                glass3.Image = MixGame.Properties.Resources.GlassFilled;
+            }
 
             if (difficulty.Text == "" || difficulty.Text == "Prosím, vyberte obtížnost!")
             {
@@ -70,43 +82,51 @@ namespace MixGame
 
                 switch(difficulty.Text)
                 {
+                    case "Automatická":
+                        roundNumber += 1;
+                        speed = 5 + roundNumber;
+                        numberOfMixes = 3 + roundNumber;
+                        break;
+
                     case "Velmi Lehká":
                         speed = 5;
+                        numberOfMixes = 3;
                         break;
                     case "Lehká":
                         speed = 10;
+                        numberOfMixes = 5;
                         break;
                     case "Střední":
                         speed = 15;
+                        numberOfMixes = 10;
                         break;
                     case "Těžká":
                         speed = 20;
+                        numberOfMixes = 15;
                         break;
                     case "Extrémní":
                         speed = 25;
+                        numberOfMixes = 20;
                         break;
                 }
-
-            if (!isMoving)
-            {
                 marble.Visible = false;
                 marble.BringToFront();
-                whichToSwap();
-                startMixing();
-                }
+                callPerMix();
             }
         }
 
+        private void callPerMix()
+        {
+            currentMixes += 1;
 
+            if (!isMoving)
+            {
+                whichToSwap();
+                startMixing();
+            }
+        }
         private void startMixing()
         {
-            if (difficulty.Text != "Prosím, vyberte obtížnost!")
-            {
-                glass1.Image = MixGame.Properties.Resources.GlassFilled;
-                glass2.Image = MixGame.Properties.Resources.GlassFilled;
-                glass3.Image = MixGame.Properties.Resources.GlassFilled;
-            }
-
             marbleLoc = rnd.Next(0, 3);
 
             switch (marbleLoc)
@@ -150,6 +170,8 @@ namespace MixGame
         {
             if (isMoving)
             {
+                readyToChoose = false;
+
                 for (int a = 0; a < speed; a++) {
 
                     glassList[firstToSwap].Location = new Point(glassList[firstToSwap].Location.X + 1, glassList[firstToSwap].Location.Y);
@@ -160,11 +182,19 @@ namespace MixGame
                         swapIndexInList();
                         isMoving = false;
                         readyToChoose = true;
+                        if (currentMixes <= numberOfMixes)
+                        {
+                            callPerMix();
+                        }
                     }
                 }
                 marble.Location = new Point(glass2.Location.X + 34, marble.Location.Y);
             } else {
                 resetGlassPosition(true);
+                if (currentMixes <= numberOfMixes)
+                {
+                    callPerMix();
+                }
             }
         }
 
@@ -214,13 +244,27 @@ namespace MixGame
             }
         }
 
-        private void endgameScreen(bool win)
+        private bool endgameScreen(bool win)
         {
+
             if (win)
             {
                 gameResults.Location = new Point(107, 9);
                 switch (difficulty.Text)
                 {
+                    case "Automatická":
+                        if (profit == 100)
+                        {
+                            profit = 100;
+                        } else
+                        {
+                            profit = 10 * roundNumber;
+                        }
+
+                        money += profit;
+                        currentMoney.Text = "$:" + money.ToString();
+                        break;
+
                     case "Velmi Lehká":
                         profit = 100;
                         money += profit;
@@ -253,6 +297,11 @@ namespace MixGame
                 gameResults.Text = "Smůla! ;-;";
                 switch(difficulty.Text)
                 {
+                    case "Automatická":
+                        money -= profit / 10 * roundNumber;
+                        currentMoney.Text = "$:" + money.ToString();
+                        break;
+
                     case "Velmi Lehká":
                         money -= 10;
                         currentMoney.Text = "$:" + money.ToString();
@@ -279,11 +328,12 @@ namespace MixGame
             gameResults.Show();
             if(money <= 0)
             {
-                bankrot.Show();
+                //bankrot.Show();
                 startButton.Enabled = false;
             }
             readyToChoose = false;
-            return;
+            colorControl.Start();
+            return win;
         }
         private void difficulty_MouseHover(object sender, EventArgs e)
         {
@@ -294,6 +344,20 @@ namespace MixGame
         {
             if (difficulty.Text == "Extrémní" || difficulty.Text == "Automatická")
                 difficulty.Enabled = false;
+        }
+
+        private void colorControl_Tick(object sender, EventArgs e)
+        {
+
+            try
+            {
+                currentMoney.ForeColor = Color.FromArgb(1, money / 16, money / 4, money / 8);
+            } 
+            catch(ArgumentException)
+            {
+                currentMoney.ForeColor = Color.FromArgb(1, 255, 255, 255);
+                currentMoney.BackColor = Color.FromArgb(50, 252, 11, 3);
+            }
         }
     }
 }

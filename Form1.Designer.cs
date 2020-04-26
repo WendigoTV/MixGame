@@ -41,6 +41,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.bankrot = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.colorControl = new System.Windows.Forms.Timer(this.components);
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.glass1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.glass2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.glass3)).BeginInit();
@@ -87,7 +89,7 @@
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(148, 62);
             this.startButton.TabIndex = 3;
-            this.startButton.Text = "Start";
+            this.startButton.Text = "Mix!";
             this.startButton.UseVisualStyleBackColor = true;
             this.startButton.Click += new System.EventHandler(this.startButton_Click);
             // 
@@ -167,6 +169,10 @@
             this.label2.TabIndex = 10;
             this.label2.Text = "© WendigoTV, 2020";
             // 
+            // colorControl
+            // 
+            this.colorControl.Tick += new System.EventHandler(this.colorControl_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -210,6 +216,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label bankrot;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Timer colorControl;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
