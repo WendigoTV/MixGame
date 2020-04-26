@@ -29,11 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.glass1 = new System.Windows.Forms.PictureBox();
-            this.glass2 = new System.Windows.Forms.PictureBox();
-            this.glass3 = new System.Windows.Forms.PictureBox();
             this.startButton = new System.Windows.Forms.Button();
-            this.marble = new System.Windows.Forms.PictureBox();
             this.animationFPS = new System.Windows.Forms.Timer(this.components);
             this.currentMoney = new System.Windows.Forms.Label();
             this.gameResults = new System.Windows.Forms.Label();
@@ -43,44 +39,15 @@
             this.colorControl = new System.Windows.Forms.Timer(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.instruction = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.glass1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.glass2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.glass3)).BeginInit();
+            this.marble = new System.Windows.Forms.PictureBox();
+            this.glass3 = new System.Windows.Forms.PictureBox();
+            this.glass2 = new System.Windows.Forms.PictureBox();
+            this.glass1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.marble)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.glass3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.glass2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.glass1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // glass1
-            // 
-            this.glass1.Image = global::MixGame.Properties.Resources.GlassEmpty;
-            this.glass1.Location = new System.Drawing.Point(11, 65);
-            this.glass1.Margin = new System.Windows.Forms.Padding(2);
-            this.glass1.Name = "glass1";
-            this.glass1.Size = new System.Drawing.Size(148, 205);
-            this.glass1.TabIndex = 0;
-            this.glass1.TabStop = false;
-            this.glass1.Click += new System.EventHandler(this.glass1_Click);
-            // 
-            // glass2
-            // 
-            this.glass2.Image = global::MixGame.Properties.Resources.GlassEmpty;
-            this.glass2.Location = new System.Drawing.Point(227, 65);
-            this.glass2.Margin = new System.Windows.Forms.Padding(2);
-            this.glass2.Name = "glass2";
-            this.glass2.Size = new System.Drawing.Size(148, 205);
-            this.glass2.TabIndex = 1;
-            this.glass2.TabStop = false;
-            this.glass2.Click += new System.EventHandler(this.glass2_Click);
-            // 
-            // glass3
-            // 
-            this.glass3.Image = global::MixGame.Properties.Resources.GlassEmpty;
-            this.glass3.Location = new System.Drawing.Point(441, 65);
-            this.glass3.Margin = new System.Windows.Forms.Padding(2);
-            this.glass3.Name = "glass3";
-            this.glass3.Size = new System.Drawing.Size(148, 205);
-            this.glass3.TabIndex = 2;
-            this.glass3.TabStop = false;
-            this.glass3.Click += new System.EventHandler(this.glass3_Click);
             // 
             // startButton
             // 
@@ -93,16 +60,6 @@
             this.startButton.Text = "Mix!";
             this.startButton.UseVisualStyleBackColor = true;
             this.startButton.Click += new System.EventHandler(this.startButton_Click);
-            // 
-            // marble
-            // 
-            this.marble.Image = global::MixGame.Properties.Resources.Marble;
-            this.marble.Location = new System.Drawing.Point(264, 145);
-            this.marble.Margin = new System.Windows.Forms.Padding(2);
-            this.marble.Name = "marble";
-            this.marble.Size = new System.Drawing.Size(72, 72);
-            this.marble.TabIndex = 4;
-            this.marble.TabStop = false;
             // 
             // animationFPS
             // 
@@ -178,6 +135,49 @@
             this.instruction.UseVisualStyleBackColor = false;
             this.instruction.Click += new System.EventHandler(this.button1_Click);
             // 
+            // marble
+            // 
+            this.marble.Image = global::MixGame.Properties.Resources.Marble;
+            this.marble.Location = new System.Drawing.Point(264, 145);
+            this.marble.Margin = new System.Windows.Forms.Padding(2);
+            this.marble.Name = "marble";
+            this.marble.Size = new System.Drawing.Size(72, 72);
+            this.marble.TabIndex = 4;
+            this.marble.TabStop = false;
+            // 
+            // glass3
+            // 
+            this.glass3.Image = global::MixGame.Properties.Resources.GlassEmpty;
+            this.glass3.Location = new System.Drawing.Point(441, 65);
+            this.glass3.Margin = new System.Windows.Forms.Padding(2);
+            this.glass3.Name = "glass3";
+            this.glass3.Size = new System.Drawing.Size(148, 205);
+            this.glass3.TabIndex = 2;
+            this.glass3.TabStop = false;
+            this.glass3.Click += new System.EventHandler(this.glass3_Click);
+            // 
+            // glass2
+            // 
+            this.glass2.Image = global::MixGame.Properties.Resources.GlassEmpty;
+            this.glass2.Location = new System.Drawing.Point(227, 65);
+            this.glass2.Margin = new System.Windows.Forms.Padding(2);
+            this.glass2.Name = "glass2";
+            this.glass2.Size = new System.Drawing.Size(148, 205);
+            this.glass2.TabIndex = 1;
+            this.glass2.TabStop = false;
+            this.glass2.Click += new System.EventHandler(this.glass2_Click);
+            // 
+            // glass1
+            // 
+            this.glass1.Image = global::MixGame.Properties.Resources.GlassEmpty;
+            this.glass1.Location = new System.Drawing.Point(11, 65);
+            this.glass1.Margin = new System.Windows.Forms.Padding(2);
+            this.glass1.Name = "glass1";
+            this.glass1.Size = new System.Drawing.Size(148, 205);
+            this.glass1.TabIndex = 0;
+            this.glass1.TabStop = false;
+            this.glass1.Click += new System.EventHandler(this.glass1_Click);
+            // 
             // MixGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -198,10 +198,11 @@
             this.MaximizeBox = false;
             this.Name = "MixGame";
             this.Text = "MixGame v1.0";
-            ((System.ComponentModel.ISupportInitialize)(this.glass1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.glass2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.glass3)).EndInit();
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MixGame_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.marble)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.glass3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.glass2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.glass1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

