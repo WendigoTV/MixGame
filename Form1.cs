@@ -9,6 +9,8 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net.Http;
+using System.Net;
 
 namespace MixGame
 {
@@ -38,12 +40,15 @@ namespace MixGame
         int currentMixes = 0;
         int numberOfMixes;
         int roundNumber = 0;
+        int gatekeeper = 0;
+        int gatekeeperStage = 0;
 
         public MixGame()
         {
             if (!System.IO.File.Exists(@"44d7180ae5e00e9346d3badd89ad1bb3") || !System.IO.File.Exists(@"eacf867e4f019f43a04d0b2af7e3e7f4"))
             {
-                System.Windows.Forms.MessageBox.Show("ERROR: MISSING_SOURCE_FILES");
+                DialogResult result =  System.Windows.Forms.MessageBox.Show("ERROR: MISSING_SOURCE_FILES", "FATAL ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if(result == DialogResult.OK)
                 Application.Exit();
             }
             else
@@ -74,7 +79,17 @@ namespace MixGame
             currentMixes = 0;
             colorControl.Stop();
 
-            if (difficulty.Text != "Prosím, vyberte obtížnost!" && difficulty.Text != "") {
+            if (gatekeeperStage > 0)
+            {
+                difficulty.Enabled = true;
+                difficulty.Text = "Prosím, vyberte obtížnost!";
+            }
+
+            if (difficulty.Text != "Prosím, vyberte obtížnost!" && difficulty.Text != "" && difficulty.Text != "What brings you here?" 
+                && difficulty.Text != "Shouldn't you be playing?" && difficulty.Text != "Tip: Keep that mouse off!" 
+                && difficulty.Text != "Is this funny to you?!" && difficulty.Text != "Don't bother trying..." && difficulty.Text != "We're both wasting time" 
+                && difficulty.Text != "Your denial is absurd..." && difficulty.Text != "I SAID IT'S NOT FUNNY!!" && difficulty.Text != "I'm WARNING YOU!" 
+                && difficulty.Text != "YOUR FINAL. WARNING." && difficulty.Text != "ENOUGH! GET THIS,***!") {
                 glass1.Image = global::MixGame.Properties.Resources.GlassFilled;
                 glass2.Image = global::MixGame.Properties.Resources.GlassFilled;
                 glass3.Image = global::MixGame.Properties.Resources.GlassFilled;
@@ -90,38 +105,46 @@ namespace MixGame
 
             } else {
 
-                switch(difficulty.Text)
+                if (difficulty.Text != "Prosím, vyberte obtížnost!" && difficulty.Text != "" && difficulty.Text != "What brings you here?"
+    && difficulty.Text != "Shouldn't you be playing?" && difficulty.Text != "Tip: Keep that mouse off!"
+    && difficulty.Text != "Is this funny to you?!" && difficulty.Text != "Don't bother trying..." && difficulty.Text != "We're both wasting time"
+    && difficulty.Text != "Your denial is absurd..." && difficulty.Text != "I SAID IT'S NOT FUNNY!!" && difficulty.Text != "I'm WARNING YOU!"
+    && difficulty.Text != "YOUR FINAL. WARNING." && difficulty.Text != "ENOUGH! GET THIS,***!")
                 {
-                    case "Automatická":
-                        roundNumber += 1;
-                        speed = 5 + roundNumber;
-                        numberOfMixes = 3 + roundNumber;
-                        break;
 
-                    case "Velmi Lehká":
-                        speed = 5;
-                        numberOfMixes = 3;
-                        break;
-                    case "Lehká":
-                        speed = 10;
-                        numberOfMixes = 5;
-                        break;
-                    case "Střední":
-                        speed = 15;
-                        numberOfMixes = 10;
-                        break;
-                    case "Těžká":
-                        speed = 20;
-                        numberOfMixes = 15;
-                        break;
-                    case "Extrémní":
-                        speed = 25;
-                        numberOfMixes = 20;
-                        break;
+                    switch (difficulty.Text)
+                    {
+                        case "Automatická":
+                            roundNumber += 1;
+                            speed = 5 + roundNumber;
+                            numberOfMixes = 3 + roundNumber;
+                            break;
+
+                        case "Velmi Lehká":
+                            speed = 5;
+                            numberOfMixes = 3;
+                            break;
+                        case "Lehká":
+                            speed = 10;
+                            numberOfMixes = 5;
+                            break;
+                        case "Střední":
+                            speed = 15;
+                            numberOfMixes = 10;
+                            break;
+                        case "Těžká":
+                            speed = 20;
+                            numberOfMixes = 15;
+                            break;
+                        case "Extrémní":
+                            speed = 25;
+                            numberOfMixes = 20;
+                            break;
+                    }
+                    marble.Visible = false;
+                    marble.BringToFront();
+                    callPerMix();
                 }
-                marble.Visible = false;
-                marble.BringToFront();
-                callPerMix();
             }
         }
 
@@ -387,17 +410,18 @@ namespace MixGame
 
         private void button1_Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.MessageBox.Show("Pravidla: \r\n" + "Zvolte obtížnost a stiskněte tlačítko \"Mix!\" pro začátek hry a všechna následnující losování. \r\n"
+            System.Windows.Forms.MessageBox.Show("Pravidla: \r\n" + "\r\n" + "Zvolte obtížnost a stiskněte tlačítko \"Mix!\" pro začátek hry a všechna následnující losování. \r\n"
+                + "\r\n"
                 + "Máte na výběr z 5ti úrovní, přičemž \"Automatická\" narůstá plynule a \"Extrémní\" Vám dá pořádně zabrat! \r\n"
-                + "Pokud přijdete o všechny peníze, hra pro Vás končí. \r\n" 
-                + "Dále se jedná o klasické \"skořápky\", přeji hodně štěstí! \r\n" 
                 + "\r\n"
+                + "Pokud přijdete o všechny peníze, hra pro Vás končí. \r\n"
                 + "\r\n"
-                + "|9cd1a66d0dff500d226bc8305607219e|");
+                + "Dále se jedná o klasické \"skořápky\", přeji hodně štěstí!", "9cd1a66d0dff500d226bc8305607219e", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void difficulty_TextChanged(object sender, EventArgs e)
         {
+
             switch (difficulty.Text)
             {
                 case "9cd1a66d0dff500d226bc8305607219e":
@@ -532,6 +556,86 @@ namespace MixGame
                     }
                     break;
             }
+
+            if (difficulty.DropDownStyle == ComboBoxStyle.DropDown && !devMode)
+            {
+                gatekeeper = rnd.Next(0, 11);
+            }
+
+            if (gatekeeper == 3 && !devMode && (difficulty.Text != "Automatická" || difficulty.Text != "Velmi Lehká" || difficulty.Text != "Lehká" || difficulty.Text != "Střední" || difficulty.Text != "Těžká" || difficulty.Text != "Extrémní" || difficulty.Text != "Custom" || difficulty.Text != "Prosím, vyberte obtížnost!" || difficulty.Text != ""))
+            {
+                gatekeeperColorControl.Interval = 5;
+                gatekeeperColorControl.Start();
+
+                switch (gatekeeperStage)
+                {
+                    case 0:
+                        difficulty.Text = "What brings you here?";
+                        difficulty.Enabled = false;
+                        gatekeeperStage += 1;
+                        break;
+
+                    case 1:
+                        difficulty.Text = "Shouldn't you be playing?";
+                        difficulty.Enabled = false;
+                        gatekeeperStage += 1;
+                        break;
+
+                    case 2:
+                        difficulty.Text = "Tip: Keep that mouse off!";
+                        difficulty.Enabled = false;
+                        gatekeeperStage += 1;
+                        break;
+
+                    case 3:
+                        difficulty.Text = "Is this funny to you?!";
+                        difficulty.Enabled = false;
+                        gatekeeperStage += 1;
+                        break;
+
+                    case 4:
+                        difficulty.Text = "Don't bother trying...";
+                        difficulty.Enabled = false;
+                        gatekeeperStage += 1;
+                        break;
+
+                    case 5:
+                        difficulty.Text = "We're both wasting time";
+                        difficulty.Enabled = false;
+                        gatekeeperStage += 1;
+                        break;
+
+                    case 6:
+                        difficulty.Text = "Your denial is absurd...";
+                        difficulty.Enabled = false;
+                        gatekeeperStage += 1;
+                        break;
+
+                    case 7:
+                        difficulty.Text = "I SAID IT'S NOT FUNNY!!";
+                        difficulty.Enabled = false;
+                        gatekeeperStage += 1;
+                        break;
+
+                    case 8:
+                        difficulty.Text = "I'm WARNING YOU!";
+                        difficulty.Enabled = false;
+                        gatekeeperStage += 1;
+                        break;
+
+                    case 9:
+                        difficulty.Text = "YOUR FINAL. WARNING.";
+                        difficulty.Enabled = false;
+                        gatekeeperStage += 1;
+                        break;
+
+                    case 10:
+                        difficulty.Text = "ENOUGH! GET THIS!";
+                        difficulty.Enabled = false;
+
+                        break;
+                }
+            }
         }
 
         private void MixGame_FormClosing(object sender, FormClosingEventArgs e)
@@ -544,6 +648,51 @@ namespace MixGame
             catch (FileNotFoundException)
             {
                 return;
+            }
+        }
+
+        private void gatekeeperColorControl_Tick(object sender, EventArgs e)
+        {
+            if (gatekeeperStage > 0)
+            {
+                try
+                {
+                    MixGame.ActiveForm.BackColor = Color.FromArgb(255, 255, 255 - (25 * gatekeeperStage), 255 - (25 * gatekeeperStage));
+
+                } catch(NullReferenceException) {
+
+                    return;
+                }
+            }
+        }
+
+        private void sendPostToServer()
+        {
+            HttpWebRequest webRequest;
+
+            string requestParams = "{ \"postName\": \"POST Request with a corrected title\", \"userName\": \"admin\", \"data\": \"Testing my data simplified\" }";
+
+            webRequest = (HttpWebRequest)WebRequest.Create("http://example.com/xyz/php/api/createjob.php");
+
+            webRequest.Method = "POST";
+            webRequest.ContentType = "application/json";
+
+            byte[] byteArray = Encoding.UTF8.GetBytes(requestParams);
+            webRequest.ContentLength = byteArray.Length;
+            using (Stream requestStream = webRequest.GetRequestStream())
+            {
+                requestStream.Write(byteArray, 0, byteArray.Length);
+            }
+
+            // Get the response.
+            using (WebResponse response = webRequest.GetResponse())
+            {
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader rdr = new StreamReader(responseStream, Encoding.UTF8);
+                    string Json = rdr.ReadToEnd(); // response from server
+
+                }
             }
         }
     }

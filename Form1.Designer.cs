@@ -37,12 +37,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.colorControl = new System.Windows.Forms.Timer(this.components);
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.instruction = new System.Windows.Forms.Button();
             this.marble = new System.Windows.Forms.PictureBox();
             this.glass3 = new System.Windows.Forms.PictureBox();
             this.glass2 = new System.Windows.Forms.PictureBox();
             this.glass1 = new System.Windows.Forms.PictureBox();
+            this.gatekeeperColorControl = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.marble)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.glass3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.glass2)).BeginInit();
@@ -178,10 +178,15 @@
             this.glass1.TabStop = false;
             this.glass1.Click += new System.EventHandler(this.glass1_Click);
             // 
+            // gatekeeperColorControl
+            // 
+            this.gatekeeperColorControl.Tick += new System.EventHandler(this.gatekeeperColorControl_Tick);
+            // 
             // MixGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(600, 366);
             this.Controls.Add(this.instruction);
             this.Controls.Add(this.label2);
@@ -222,8 +227,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Timer colorControl;
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button instruction;
+        private System.Windows.Forms.Timer gatekeeperColorControl;
     }
 }
 
